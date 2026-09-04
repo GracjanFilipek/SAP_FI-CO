@@ -2,15 +2,15 @@
 
 A Claude Code skill that triages an SAP FI/CO support ticket before anyone logs into the system.
 
-Given a pasted ticket, incident, or error message, it produces one short card: ranked root-cause hypotheses, an ordered read-only check sequence with T-codes and tables, and — when the ticket is too thin to work — the clarifying question to send back to the requester.
+Paste a ticket, incident, or error message. You get back one short card: ranked root-cause hypotheses, an ordered read-only check sequence with T-codes and tables, and the clarifying question to send back when the ticket is too thin to work.
 
-## What it is not
+## Scope
 
-This does not answer tickets, and it does not read your system. It is a structuring aid for a consultant who already knows FI/CO: it makes the first twenty minutes in the system deliberate rather than exploratory, and it stops you investigating a ticket that cannot yet be investigated.
+The skill structures your thinking before you log in. It never touches your system, and it will not answer the ticket for you. If you already know FI/CO, it makes your first twenty minutes count and stops you investigating a ticket that nobody can investigate yet.
 
-Everything it emits is a hypothesis to test. The T-codes are starting points, not answers, and they vary by release — the skill is instructed to flag ECC/S4HANA differences rather than silently picking one. It will not invent document numbers, message IDs, or SAP Note numbers.
+Treat every line it emits as a hypothesis to test. T-codes are starting points and they vary by release, so the skill flags ECC/S4HANA differences instead of picking one for you. It invents no document numbers, message IDs, or SAP Note numbers.
 
-If you do not know FI/CO, this will not make you competent in it. It will just help you lose less time.
+If you do not know FI/CO, this will not make you competent in it. It will save you time you would otherwise lose.
 
 ## Install
 
@@ -26,13 +26,15 @@ Or into your personal skills folder, to have it available in every project:
 cp -r .claude/skills/sap-fi-co ~/.claude/skills/
 ```
 
-Claude Code picks up new skills without a restart. Invoke it with `/sap-fi-co`, or just paste a ticket and let Claude load it automatically — the description covers pasted error messages.
+Invoke it with `/sap-fi-co`, or paste a ticket and let Claude load the skill on its own, since the description covers pasted error messages.
+
+Claude Code watches skill directories and picks up edits live. If you had to create `~/.claude/skills/` for the copy above, restart Claude Code once so it starts watching the new directory.
 
 The invocation name comes from the directory name, so if you rename `sap-fi-co/`, the command changes with it.
 
 ## Example output
 
-Illustrative only, from a deliberately thin ticket: *"User can't post an invoice, gets an error about the period. Urgent."*
+Illustrative only. The ticket below is thin on purpose: *"User can't post an invoice, gets an error about the period. Urgent."*
 
 ```
 TICKET SUMMARY
@@ -73,9 +75,9 @@ opening config.
 
 ## Confidentiality
 
-This repository contains no client-specific configuration, and no data from any engagement. The T-codes, tables, and message IDs in it are SAP standard; the example above is invented.
+This repository contains no client-specific configuration, and no data from any engagement. The T-codes, tables, and message IDs in it are SAP standard, and nothing in the example above comes from a real ticket.
 
-The skill itself carries a confidentiality rule: ticket content is client data, and output reused outside an engagement should be stripped of client and system names, document numbers, amounts, and vendor or customer names.
+The skill itself carries a confidentiality rule: ticket content is client data. Before you reuse output outside an engagement, strip client and system names, document numbers, amounts, and vendor or customer names.
 
 ## Licence
 
